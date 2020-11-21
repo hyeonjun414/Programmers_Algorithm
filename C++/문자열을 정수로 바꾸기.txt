@@ -5,6 +5,7 @@ using namespace std;
 
 int solution(string s) {
     int answer = 0;
-    answer = atoi(s.c_str());
+    //answer = atoi(s.c_str());
+    answer = stoi(s); // 문자열에는 이게 더 좋음
     return answer;
 }

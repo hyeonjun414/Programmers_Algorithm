@@ -1,0 +1,15 @@
+#include <string>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+long long solution(long long n) {
+    long long answer = 0;
+    if(n == 1) return pow(2, 2);
+    for(int i=0; i<n; i++)
+    {
+        if(sqrt(n)==i)
+            return pow(i+1, 2);
+    }
+    return -1;
+}

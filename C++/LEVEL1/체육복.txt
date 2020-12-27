@@ -1,0 +1,60 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int solution(int n, vector<int> lost, vector<int> reserve) {
+    int answer = 0;
+    vector<int> students(n,1);
+    // 하나의 벡터에 학생의 정보 입력
+    for(int i = 0; i<reserve.size(); i++)
+        students[reserve[i]-1]++;
+    for(int i = 0; i<lost.size(); i++)
+        students[lost[i]-1]--;
+    
+    for(int i = 0; i<n; i++)
+    {
+        // 현재 학생이 운동복이 없고 이전 학생이 있을 경우
+        if(i > 0 && students[i] == 0 && students[i-1] == 2)
+        {
+            students[i-1]--;
+            students[i]++;
+        }
+        // 현재 학생이 운동복이 없고 다음 학생이 있을 경우
+        if(i < n-1 && students[i] == 0 && students[i+1] == 2)
+        {
+            students[i+1]--;
+            students[i]++;
+        }
+    }
+    //없는 학생을 제외한 숫자를 카운트
+    for(int s : students)
+        if(s > 0) answer ++;
+    return answer;
+    /*
+    int answer = n;
+    int num = 0;
+    vector<int>::iterator it;
+    
+    for(int i=0; i<lost.size(); i++)
+    {
+        if(reserve.end() != find(reserve.begin(), reserve.end(), lost[i]-1))
+        {
+            it = find(reserve.begin(), reserve.end(), lost[i]-1);
+            lost[i] = 0;
+            *it = 0;
+        }
+        else if(reserve.end() != find(reserve.begin(), reserve.end(), lost[i]+1))
+        {
+            it = find(reserve.begin(), reserve.end(), lost[i]+1);
+            lost[i] = 0;
+            *it = 0;
+        }
+        else
+            i++;
+    }
+    for(int i=0; i<lost.size(); i++)
+        if(lost[i] != 0) num++;
+    return answer-num;
+    */ //테스트 케이스만 통과... 나머지 실패
+}

@@ -1,0 +1,44 @@
+#include <string>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int solution(int bridge_length, int weight, vector<int> truck_weights) {
+    int answer = 0;
+    int sum = 0;
+    int i = 0;
+    queue<int> q;
+    
+    while(1)
+    {
+        //만약 대기중인 차량이 없다면 다리 길이를 더하고 루프 탈출
+        if(i == truck_weights.size())
+        {
+            answer += bridge_length;
+            break;
+        }
+        answer++; //1초 지남
+        
+        int tmp = truck_weights[i]; // 현재 차량
+        
+        //1초마다 늘어나는 큐를 기준으로 다리길이와 같아지면 앞의 무게를 빼주고 혀재 하중을 줄임
+        if(q.size() == bridge_length)
+        {
+            sum -=q.front();
+            q.pop();
+        }
+        //현재 하중과 현재 차량을 더한 무게가 최대하중을 넘지않으면 큐에 넣어줌
+        if(sum + tmp <= weight)
+        {
+            q.push(tmp);
+            sum += tmp;
+            i++;
+        }
+        else
+        {
+            q.push(0);
+        }
+    }
+    return answer;
+}
